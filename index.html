@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Managment System</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <h1>Employee Managment System</h1>
+    <div class="buttons">
+        <button id="avg_sal">Average Saralry of the Employees</button>
+        <button id="admin-dept">Department-Administaration</button>
+        <button id="increase-sal">Increase Salary by 10%</button>
+        <button id="age-sort">Youngest to Oldest Employees</button>
+    </div>
+    <p id="demo1"></p>
+</body>
+
+</html>
+
+<script>
+    let sum = 0;
+    let average = 0;
+    let employees = [
+        { name: 'Vineet', age: 23, dept: 'R&D', salary: 200000 },
+        { name: 'Rahul', age: 30, dept: 'Admin', salary: 220000 },
+        { name: 'Nirmala', age: 54, dept: 'Janitory', salary: 18000 },
+        { name: 'Robert', age: 52, dept: 'Admin', salary: 24000 }
+    ]
+
+    //Average Salary of Employees
+    let avg_sal = document.getElementById('avg_sal');
+    avg_sal.addEventListener('click', function (e) {
+        e.preventDefault();
+        sum = 0;
+        for (let i = 0; i < employees.length; i++) {
+            sum = sum + employees[i].salary;
+            average = sum / employees.length;
+        }
+        console.log(average);
+        document.getElementById('demo1').innerHTML = "The average Salary of the Employees is " + Math.floor(average);
+    })
+
+    //Employees working in Admin Department
+    let admin = document.getElementById('admin-dept');
+    admin.addEventListener('click', function (e) {
+        e.preventDefault();
+        let admindeptnames = []
+        let admindept = employees.filter(employee => employee.dept === 'Admin')
+        admindept.forEach(element => {
+            admindeptnames.push(element.name + ' ')
+            document.getElementById('demo1').innerHTML = "Employees working in Admin Department are " + admindeptnames;
+        });
+    });
+
+    // Increasing Salary by 10%
+    let sal10 = document.getElementById('increase-sal');
+    sal10.addEventListener('click', function (e) {
+        e.preventDefault();
+        for (let i = 0; i < employees.length; i++) {
+            employees[i].salary = employees[i].salary * 1.1;
+        }
+        document.getElementById('demo1').innerHTML = "Salaries have be updated ";
+    })
+
+    //Sorting (Age)
+    let sort = document.getElementById('age-sort');
+    sort.addEventListener('click', function (e) {
+        e.preventDefault();
+        let sortedEmployees = employees.slice().sort((a, b) => a.age - b.age);
+        let htmlMarkup = sortedEmployees.map(employee => {
+            return `<p>Name: ${employee.name}, Age: ${employee.age}</p>`;
+        }).join('');
+        document.getElementById('demo1').innerHTML = htmlMarkup;
+    })
+    
+</script>
